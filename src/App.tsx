@@ -48,6 +48,15 @@ import {
 // --- Types ---
 type Page = 'home' | 'projects' | 'experience' | 'assistant' | 'blog' | 'agenticSalesDriver' | 'reqscanAiAnalyzer';
 type ChatMessage = { role: 'user' | 'bot'; text: string };
+type BlogPost = {
+  date: string;
+  readTime: string;
+  title: string;
+  excerpt: string;
+  tags: string[];
+  image: string;
+  body: string[];
+};
 
 const createSessionId = () => {
   if (typeof crypto !== 'undefined' && 'randomUUID' in crypto) {
@@ -164,7 +173,7 @@ const HomeScreen = ({ setCurrentPage }: { setCurrentPage: (p: Page) => void }) =
               <div className="absolute -inset-1 bg-gradient-to-tr from-secondary/40 to-tertiary/40 rounded-lg blur-md opacity-75"></div>
               <div className="relative p-1.5 rounded-lg bg-white/10 backdrop-blur-md border border-white/20">
                 <img 
-                  src="https://picsum.photos/seed/tanmesh/600/800" 
+                  src="/profile.jpeg" 
                   alt="Tanmesh Joshi" 
                   className="rounded-md w-full max-w-[340px] aspect-[3/4] object-cover grayscale hover:grayscale-0 transition-all duration-700 shadow-2xl"
                   referrerPolicy="no-referrer"
@@ -1469,15 +1478,21 @@ const AssistantScreen = () => {
   );
 };
 
-const BlogScreen = () => {
-  const posts = [
+const BlogScreen = ({ onOpenPost }: { onOpenPost: (post: BlogPost) => void }) => {
+  const posts: BlogPost[] = [
     {
       date: "May 24, 2024",
       readTime: "8 MIN READ",
       title: "Building RAG Pipelines: Beyond Simple Vector Search",
       excerpt: "Moving past basic similarity search to implement context-aware retrieval mechanisms using hybrid ranking and semantic re-ranking strategies.",
       tags: ["RAG", "AI", "LLM"],
-      image: "https://picsum.photos/seed/rag/600/400"
+      image: "https://picsum.photos/seed/rag/600/400",
+      body: [
+        "Simple vector search gets a demo working, but it usually breaks down once the knowledge base gets larger, noisier, or more repetitive. The retrieval layer starts returning fragments that are semantically adjacent without actually being useful for the answer the user needs.",
+        "The first upgrade is hybrid retrieval. Dense similarity is still valuable, but lexical matching helps recover exact product names, error strings, and niche terminology that embeddings sometimes flatten away. Combining both signals creates a much stronger candidate set before the model ever sees the context.",
+        "After retrieval, re-ranking matters more than most teams expect. A smaller semantic re-ranker or lightweight scoring layer can drastically improve which chunks make the final prompt. That means fewer irrelevant tokens, lower cost, and more grounded completions.",
+        "The goal is not to retrieve more text. The goal is to retrieve the right evidence with enough structure that generation becomes the easy part."
+      ]
     },
     {
       date: "May 18, 2024",
@@ -1485,7 +1500,13 @@ const BlogScreen = () => {
       title: "Kafka Persistence: Lessons from 100TB Clusters",
       excerpt: "Exploring the nuances of log segmentation, retention policies, and disk I/O optimization for high-throughput event streaming systems.",
       tags: ["Kafka", "Latency", "DevOps"],
-      image: "https://picsum.photos/seed/kafka/600/400"
+      image: "https://picsum.photos/seed/kafka/600/400",
+      body: [
+        "At large scale, Kafka durability stops being an abstract configuration problem and becomes a storage discipline problem. Segment sizing, compaction behavior, broker disk layout, and retention policy all push directly on throughput and recovery time.",
+        "One of the most expensive mistakes is treating retention as a pure business rule instead of an operational control. Long retention sounds safe, but it quietly expands recovery windows, increases compaction pressure, and makes node replacement much more painful than teams plan for.",
+        "Disk I O is usually the real bottleneck. Once clusters get large, the question is less about whether Kafka can ingest data and more about how predictably it can flush, replicate, and recover under sustained pressure. That is where careful partitioning and storage isolation start paying for themselves.",
+        "Healthy clusters are not just fast. They are boring under load, boring during failover, and boring when replaying history. That kind of boring is the result of a lot of deliberate persistence design."
+      ]
     }
   ];
 
@@ -1576,7 +1597,10 @@ const BlogScreen = () => {
                         <span key={tag} className="text-xs font-medium px-3 py-1 rounded-full bg-surface-container-high text-on-surface">#{tag}</span>
                       ))}
                     </div>
-                    <button className="text-secondary font-bold text-sm uppercase tracking-wider flex items-center gap-2 group-hover:translate-x-2 transition-transform">
+                    <button
+                      onClick={() => onOpenPost(post)}
+                      className="text-secondary font-bold text-sm uppercase tracking-wider flex items-center gap-2 group-hover:translate-x-2 transition-transform"
+                    >
                       Read Dispatch <ArrowRight className="w-4 h-4" />
                     </button>
                   </div>
@@ -1625,17 +1649,110 @@ const BlogScreen = () => {
   );
 };
 
+const BlogPostScreen = ({
+  post,
+  onBack,
+}: {
+  post: BlogPost;
+  onBack: () => void;
+}) => {
+  return (
+    <div className="pt-32 pb-24 px-8 max-w-5xl mx-auto">
+      <button
+        onClick={onBack}
+        className="inline-flex items-center gap-3 text-sm font-bold uppercase tracking-[0.2em] text-on-primary-container hover:text-secondary transition-colors mb-10"
+      >
+        <ArrowLeft className="w-4 h-4" />
+        Back to Dispatches
+      </button>
+
+      <section className="relative overflow-hidden rounded-[2rem] glass-panel border border-outline-variant/10 mb-14">
+        <div className="absolute inset-0 bg-gradient-to-t from-surface via-surface/55 to-transparent z-10"></div>
+        <img
+          src={post.image}
+          alt={post.title}
+          className="w-full h-[300px] md:h-[420px] object-cover opacity-55"
+          referrerPolicy="no-referrer"
+        />
+        <div className="absolute inset-x-0 bottom-0 z-20 p-8 md:p-12">
+          <div className="flex flex-wrap items-center gap-4 text-xs font-bold uppercase tracking-widest text-on-primary-container mb-5">
+            <span>{post.date}</span>
+            <span className="w-1 h-1 rounded-full bg-outline-variant"></span>
+            <span>{post.readTime}</span>
+          </div>
+          <h1 className="font-headline text-4xl md:text-6xl font-bold tracking-tight leading-[1.08] max-w-4xl mb-6">
+            {post.title}
+          </h1>
+          <p className="text-lg text-on-surface-variant max-w-3xl leading-relaxed">
+            {post.excerpt}
+          </p>
+        </div>
+      </section>
+
+      <div className="grid lg:grid-cols-12 gap-10">
+        <article className="lg:col-span-8 glass-panel rounded-[2rem] border border-outline-variant/10 p-8 md:p-10">
+          <div className="flex flex-wrap gap-3 mb-10">
+            {post.tags.map((tag) => (
+              <span
+                key={tag}
+                className="px-4 py-2 rounded-full bg-surface-container-highest text-xs font-bold uppercase tracking-wider text-secondary"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+          <div className="space-y-7">
+            {post.body.map((paragraph, index) => (
+              <p key={`${post.title}-${index}`} className="text-base md:text-lg leading-8 text-on-surface-variant">
+                {paragraph}
+              </p>
+            ))}
+          </div>
+        </article>
+
+        <aside className="lg:col-span-4 space-y-8">
+          <section className="glass-panel rounded-[2rem] border border-outline-variant/10 p-8">
+            <p className="text-[11px] uppercase tracking-[0.24em] text-secondary font-bold mb-4">
+              Post Notes
+            </p>
+            <p className="text-sm leading-7 text-on-primary-container">
+              This layout is ready for full blog content. Add or edit paragraphs in the post&apos;s
+              <span className="text-on-surface"> body </span>
+              array to expand the article without changing the design.
+            </p>
+          </section>
+
+          <section className="bg-surface-container rounded-[2rem] p-8 border border-outline-variant/10">
+            <h3 className="font-headline text-2xl font-bold mb-4">Next Signal</h3>
+            <p className="text-sm text-on-primary-container leading-7">
+              Use this space for a related post, newsletter prompt, or author note while keeping the same visual rhythm as the rest of the site.
+            </p>
+          </section>
+        </aside>
+      </div>
+    </div>
+  );
+};
+
 export default function App() {
   const [currentPage, setCurrentPage] = useState<Page>('home');
+  const [selectedBlogPost, setSelectedBlogPost] = useState<BlogPost | null>(null);
+
+  const navigateTo = (page: Page) => {
+    setCurrentPage(page);
+    if (page === 'blog') {
+      setSelectedBlogPost(null);
+    }
+  };
 
   // Scroll to top on page change
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [currentPage]);
+  }, [currentPage, selectedBlogPost]);
 
   return (
     <div className="min-h-screen flex flex-col">
-      <Navbar currentPage={currentPage} setCurrentPage={setCurrentPage} />
+      <Navbar currentPage={currentPage} setCurrentPage={navigateTo} />
       
       <main className="flex-grow">
         <AnimatePresence mode="wait">
@@ -1646,13 +1763,23 @@ export default function App() {
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.3 }}
           >
-            {currentPage === 'home' && <HomeScreen setCurrentPage={setCurrentPage} />}
-            {currentPage === 'projects' && <ProjectsScreen setCurrentPage={setCurrentPage} />}
+            {currentPage === 'home' && <HomeScreen setCurrentPage={navigateTo} />}
+            {currentPage === 'projects' && <ProjectsScreen setCurrentPage={navigateTo} />}
             {currentPage === 'experience' && <ExperienceScreen />}
             {currentPage === 'assistant' && <AssistantScreen />}
-            {currentPage === 'blog' && <BlogScreen />}
-            {currentPage === 'agenticSalesDriver' && <AgenticSalesDriverCaseStudy setCurrentPage={setCurrentPage} />}
-            {currentPage === 'reqscanAiAnalyzer' && <ReqscanAiAnalyzerCaseStudy setCurrentPage={setCurrentPage} />}
+            {currentPage === 'blog' && !selectedBlogPost && (
+              <BlogScreen
+                onOpenPost={(post) => {
+                  setSelectedBlogPost(post);
+                  setCurrentPage('blog');
+                }}
+              />
+            )}
+            {currentPage === 'blog' && selectedBlogPost && (
+              <BlogPostScreen post={selectedBlogPost} onBack={() => setSelectedBlogPost(null)} />
+            )}
+            {currentPage === 'agenticSalesDriver' && <AgenticSalesDriverCaseStudy setCurrentPage={navigateTo} />}
+            {currentPage === 'reqscanAiAnalyzer' && <ReqscanAiAnalyzerCaseStudy setCurrentPage={navigateTo} />}
           </motion.div>
         </AnimatePresence>
       </main>
@@ -1665,7 +1792,7 @@ export default function App() {
           {(['home', 'experience', 'projects', 'assistant'] as Page[]).map((page) => (
             <button 
               key={page}
-              onClick={() => setCurrentPage(page)}
+              onClick={() => navigateTo(page)}
               className={`flex flex-col items-center gap-1 ${currentPage === page ? 'text-secondary' : 'text-on-primary-container'}`}
             >
               {page === 'home' && <HomeIcon className="w-5 h-5" />}
