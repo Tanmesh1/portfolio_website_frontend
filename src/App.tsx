@@ -65,6 +65,16 @@ const createSessionId = () => {
   return `session-${Date.now()}-${Math.random().toString(16).slice(2)}`;
 };
 
+const apiBaseUrl = (import.meta.env.VITE_API_BASE_URL ?? '').trim().replace(/\/+$/, '');
+
+const buildApiUrl = (path: string) => {
+  if (!apiBaseUrl) {
+    return path;
+  }
+
+  return `${apiBaseUrl}${path}`;
+};
+
 // --- Components ---
 
 const Navbar = ({ currentPage, setCurrentPage }: { currentPage: Page, setCurrentPage: (p: Page) => void }) => {
@@ -1191,7 +1201,7 @@ const AssistantScreen = () => {
     setIsLoading(true);
 
     try {
-      const response = await fetch('/api/chat', {
+      const response = await fetch(buildApiUrl('/api/chat'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -1257,7 +1267,7 @@ const AssistantScreen = () => {
     setContactFeedback(null);
 
     try {
-      const response = await fetch('/api/contact', {
+      const response = await fetch(buildApiUrl('/api/contact'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
