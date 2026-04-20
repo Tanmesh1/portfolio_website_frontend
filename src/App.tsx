@@ -306,7 +306,7 @@ const ProjectsScreen = ({ setCurrentPage }: { setCurrentPage: (p: Page) => void 
     {
       title: "ReqScan AI Analyzer",
       description: "Advanced Requirement Analyzer that transforms unstructured technical specifications into validated BRDs and system architecture maps. Utilizes RAG (Retrieval-Augmented Generation) for precision accuracy.",
-      tech: ["OpenAI API", "Pinecone", "TypeScript", "Next.js"],
+      tech: ["OpenAI API", "Pinecone", "JavaScript", "React"],
       status: "Active R&D",
       icon: <FileText className="text-tertiary" />,
       image: "/Reqscan_image.webp",
