@@ -300,7 +300,7 @@ const ProjectsScreen = ({ setCurrentPage }: { setCurrentPage: (p: Page) => void 
       tech: ["Python", "OpenAI", "FastAPI", "MongoDB"],
       status: "Production",
       icon: <MessageSquare className="text-secondary" />,
-      image: "https://picsum.photos/seed/commerce/800/450",
+      image: "/agentic_sales_photo.webp",
       caseStudyPage: 'agenticSalesDriver' as Page
     },
     {
@@ -309,7 +309,7 @@ const ProjectsScreen = ({ setCurrentPage }: { setCurrentPage: (p: Page) => void 
       tech: ["OpenAI API", "Pinecone", "TypeScript", "Next.js"],
       status: "Active R&D",
       icon: <FileText className="text-tertiary" />,
-      image: "https://picsum.photos/seed/reqscan/800/450",
+      image: "/Reqscan_image.webp",
       caseStudyPage: 'reqscanAiAnalyzer' as Page
     }
   ];
@@ -1486,7 +1486,7 @@ const BlogScreen = ({ onOpenPost }: { onOpenPost: (post: BlogPost) => void }) =>
       title: "Building RAG Pipelines: Beyond Simple Vector Search",
       excerpt: "Moving past basic similarity search to implement context-aware retrieval mechanisms using hybrid ranking and semantic re-ranking strategies.",
       tags: ["RAG", "AI", "LLM"],
-      image: "https://picsum.photos/seed/rag/600/400",
+      image: "/RAG_PIPELINE.webp",
       body: [
         "Simple vector search gets a demo working, but it usually breaks down once the knowledge base gets larger, noisier, or more repetitive. The retrieval layer starts returning fragments that are semantically adjacent without actually being useful for the answer the user needs.",
         "The first upgrade is hybrid retrieval. Dense similarity is still valuable, but lexical matching helps recover exact product names, error strings, and niche terminology that embeddings sometimes flatten away. Combining both signals creates a much stronger candidate set before the model ever sees the context.",
@@ -1543,7 +1543,7 @@ const BlogScreen = ({ onOpenPost }: { onOpenPost: (post: BlogPost) => void }) =>
             <div className="absolute -inset-4 bg-secondary/5 blur-[80px] rounded-full"></div>
             <div className="relative glass-panel rounded-xl overflow-hidden aspect-video border border-outline-variant/10">
               <img 
-                src="https://picsum.photos/seed/arch/800/450" 
+                src="/distributed_system_images.webp" 
                 className="w-full h-full object-cover opacity-60 mix-blend-luminosity" 
                 alt="Architecture"
                 referrerPolicy="no-referrer"
