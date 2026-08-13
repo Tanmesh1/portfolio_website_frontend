@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Send, Bot, User, Brain, Mail, Linkedin, Github, ArrowRight } from 'lucide-react';
 import type { ChatMessage } from '../types';
-import { createSessionId, buildApiUrl } from '../lib/api';
+import { createSessionId, buildApiUrl, fetchWithTimeout } from '../lib/api';
 
 export const AssistantScreen = () => {
   const [messages, setMessages] = useState<ChatMessage[]>([
@@ -42,7 +42,7 @@ export const AssistantScreen = () => {
     setIsLoading(true);
 
     try {
-      const response = await fetch(buildApiUrl('/api/chat'), {
+      const response = await fetchWithTimeout(buildApiUrl('/api/chat'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -65,12 +65,15 @@ export const AssistantScreen = () => {
           text: data.reply ?? "I couldn't generate a reply right now. Please try again.",
         },
       ]);
-    } catch {
+    } catch (error) {
+      const timedOut = error instanceof DOMException && error.name === 'AbortError';
       setMessages((prev) => [
         ...prev,
         {
           role: 'bot',
-          text: "The FastAPI assistant backend is not reachable right now. Start the backend server and configure GEMINI_API_KEY if you want full AI responses with memory.",
+          text: timedOut
+            ? "That request timed out. The assistant backend may be slow or unreachable right now — please try again."
+            : "The FastAPI assistant backend is not reachable right now. Start the backend server and configure GEMINI_API_KEY if you want full AI responses with memory.",
         },
       ]);
     } finally {
@@ -108,7 +111,7 @@ export const AssistantScreen = () => {
     setContactFeedback(null);
 
     try {
-      const response = await fetch(buildApiUrl('/api/contact'), {
+      const response = await fetchWithTimeout(buildApiUrl('/api/contact'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -132,8 +135,10 @@ export const AssistantScreen = () => {
         text: 'Message transmitted successfully. It has been stored in MongoDB.',
       });
     } catch (error) {
-      const errorMessage =
-        error instanceof Error
+      const timedOut = error instanceof DOMException && error.name === 'AbortError';
+      const errorMessage = timedOut
+        ? 'That request timed out. Please try again in a moment.'
+        : error instanceof Error
           ? error.message
           : 'Unable to send your message right now. Please try again.';
 
@@ -220,12 +225,14 @@ export const AssistantScreen = () => {
                 onKeyDown={(e) => e.key === 'Enter' && void handleSend()}
                 className="w-full bg-surface-container-highest border-b border-outline-variant/30 px-6 py-4 rounded-t-xl focus:outline-none focus:border-secondary transition-colors text-sm placeholder:text-on-surface-variant/50"
                 placeholder="Inquire about infrastructure, AI, or experience..."
+                aria-label="Chat message"
                 type="text"
                 disabled={isLoading || !sessionId}
               />
               <button
                 onClick={() => void handleSend()}
                 disabled={isLoading || !sessionId}
+                aria-label="Send message"
                 className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center text-secondary hover:scale-110 transition-transform"
               >
                 <Send className="w-5 h-5" />
@@ -245,8 +252,9 @@ export const AssistantScreen = () => {
             <p className="text-on-primary-container text-sm mb-8">Initiate a direct communication channel for collaborations or professional opportunities.</p>
             <form className="space-y-6" onSubmit={handleContactSubmit}>
               <div className="space-y-1">
-                <label className="text-[10px] uppercase tracking-[0.2em] text-on-surface-variant font-bold">Identification</label>
+                <label htmlFor="contact-name" className="text-[10px] uppercase tracking-[0.2em] text-on-surface-variant font-bold">Identification</label>
                 <input
+                  id="contact-name"
                   className="w-full bg-transparent border-b border-outline-variant/30 py-3 focus:outline-none focus:border-secondary transition-colors placeholder:text-outline-variant"
                   placeholder="Your Name"
                   type="text"
@@ -256,8 +264,9 @@ export const AssistantScreen = () => {
                 />
               </div>
               <div className="space-y-1">
-                <label className="text-[10px] uppercase tracking-[0.2em] text-on-surface-variant font-bold">Digital Address</label>
+                <label htmlFor="contact-email" className="text-[10px] uppercase tracking-[0.2em] text-on-surface-variant font-bold">Digital Address</label>
                 <input
+                  id="contact-email"
                   className="w-full bg-transparent border-b border-outline-variant/30 py-3 focus:outline-none focus:border-secondary transition-colors placeholder:text-outline-variant"
                   placeholder="Email@domain.com"
                   type="email"
@@ -267,8 +276,9 @@ export const AssistantScreen = () => {
                 />
               </div>
               <div className="space-y-1">
-                <label className="text-[10px] uppercase tracking-[0.2em] text-on-surface-variant font-bold">Payload</label>
+                <label htmlFor="contact-message" className="text-[10px] uppercase tracking-[0.2em] text-on-surface-variant font-bold">Payload</label>
                 <textarea
+                  id="contact-message"
                   className="w-full bg-transparent border-b border-outline-variant/30 py-3 focus:outline-none focus:border-secondary transition-colors resize-none placeholder:text-outline-variant"
                   placeholder="Your message or project scope..."
                   rows={4}
