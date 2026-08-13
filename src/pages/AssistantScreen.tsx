@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Send, Bot, User, Brain, Mail, Linkedin, Github, ArrowRight } from 'lucide-react';
+import ReactMarkdown from 'react-markdown';
 import type { ChatMessage } from '../types';
 import { createSessionId, buildApiUrl, fetchWithTimeout } from '../lib/api';
 
@@ -188,7 +189,13 @@ export const AssistantScreen = () => {
                 <div className={`p-4 rounded-2xl border ${
                   msg.role === 'user' ? 'bg-secondary/10 border-secondary/20 rounded-tr-none' : 'bg-surface-container-low border-outline-variant/5 rounded-tl-none'
                 }`}>
-                  <p className="text-sm leading-relaxed">{msg.text}</p>
+                  {msg.role === 'user' ? (
+                    <p className="text-sm leading-relaxed">{msg.text}</p>
+                  ) : (
+                    <div className="text-sm leading-relaxed [&_p]:mb-3 [&_p:last-child]:mb-0 [&_strong]:font-semibold [&_strong]:text-secondary [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:space-y-1 [&_ol]:list-decimal [&_ol]:pl-5 [&_ol]:space-y-1 [&_a]:text-secondary [&_a]:underline [&_code]:bg-surface-container-highest [&_code]:px-1 [&_code]:py-0.5 [&_code]:rounded [&_code]:text-xs">
+                      <ReactMarkdown>{msg.text}</ReactMarkdown>
+                    </div>
+                  )}
                 </div>
               </div>
             ))}
