@@ -4,8 +4,10 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "sync:projects": "node -e \"require('fs').copyFileSync('src/data/projects.json', '../backend/projects.json')\"",
+    "predev": "npm run sync:projects",
     "dev": "vite --port=3000 --host=0.0.0.0",
-    "backend:dev": "python -m uvicorn backend.main:app --reload --port 8000",
+    "backend:dev": "cd ../backend && python -m uvicorn main:app --reload --port 8000",
     "build": "vite build",
     "preview": "vite preview",
     "clean": "rm -rf dist",

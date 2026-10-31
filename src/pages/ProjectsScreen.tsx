@@ -1,27 +1,8 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'motion/react';
-import { MessageSquare, FileText, Rocket, Code } from 'lucide-react';
-
-const projects = [
-  {
-    title: "Agentic Sales Driver",
-    description: "Full-stack WhatsApp commerce system that understands buying intent, checks inventory in real time, and replies like a human sales assistant. Built as an agentic workflow for faster conversions and lower support load.",
-    tech: ["Python", "OpenAI", "FastAPI", "MongoDB"],
-    status: "Production",
-    icon: <MessageSquare className="text-secondary" />,
-    image: "/agentic_sales_photo.webp",
-    caseStudyPath: '/projects/agentic-sales-driver'
-  },
-  {
-    title: "ReqScan AI Analyzer",
-    description: "Advanced Requirement Analyzer that transforms unstructured technical specifications into validated BRDs and system architecture maps. Utilizes RAG (Retrieval-Augmented Generation) for precision accuracy.",
-    tech: ["OpenAI API", "Pinecone", "JavaScript", "React"],
-    status: "Active R&D",
-    icon: <FileText className="text-tertiary" />,
-    image: "/Reqscan_image.webp",
-    caseStudyPath: '/projects/reqscan-ai-analyzer'
-  }
-];
+import { Rocket, Code } from 'lucide-react';
+import { GITHUB_PROFILE_URL, projects } from '../data/projects';
+import { iconMap } from '../lib/icons';
 
 export const ProjectsScreen = () => {
   return (
@@ -38,9 +19,11 @@ export const ProjectsScreen = () => {
       </section>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
-        {projects.map((project, idx) => (
+        {projects.map((project, idx) => {
+          const Icon = iconMap[project.icon];
+          return (
           <motion.div
-            key={idx}
+            key={project.slug}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: idx * 0.2 }}
@@ -67,7 +50,7 @@ export const ProjectsScreen = () => {
               <div className="p-8 flex flex-col flex-grow">
                 <div className="flex items-center gap-4 mb-4">
                   <div className="w-12 h-12 rounded-lg bg-surface-container-highest flex items-center justify-center border border-outline-variant/10">
-                    {project.icon}
+                    {Icon && <Icon className="text-secondary" />}
                   </div>
                   <h2 className="font-headline text-2xl font-bold tracking-tight">{project.title}</h2>
                 </div>
@@ -79,13 +62,20 @@ export const ProjectsScreen = () => {
                     <span key={t} className="px-3 py-1 bg-surface-container-highest rounded-sm text-xs font-medium text-on-surface-variant">{t}</span>
                   ))}
                 </div>
-                <div className="mt-auto grid grid-cols-2 md:grid-cols-3 gap-3">
-                  <button className="cta-gradient px-4 py-3 rounded-full text-center text-xs font-bold uppercase tracking-widest text-surface flex items-center justify-center gap-2 hover:shadow-[0px_8px_20px_rgba(93,230,255,0.3)] transition-all">
-                    <Rocket className="w-4 h-4" />
-                    Live Demo
-                  </button>
+                <div className="mt-auto flex flex-wrap gap-3 *:flex-1 *:min-w-32">
+                  {project.demoUrl && (
+                    <a
+                      href={project.demoUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="cta-gradient px-4 py-3 rounded-full text-center text-xs font-bold uppercase tracking-widest text-surface flex items-center justify-center gap-2 hover:shadow-[0px_8px_20px_rgba(93,230,255,0.3)] transition-all"
+                    >
+                      <Rocket className="w-4 h-4" />
+                      Live Demo
+                    </a>
+                  )}
                   <a
-                    href="https://github.com/Tanmesh1?tab=repositories"
+                    href={project.repoUrl ?? GITHUB_PROFILE_URL}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="px-4 py-3 rounded-full border border-secondary/30 bg-surface-container-highest/20 text-center text-xs font-bold uppercase tracking-widest text-secondary flex items-center justify-center gap-2 hover:bg-secondary/10 transition-all"
@@ -93,17 +83,20 @@ export const ProjectsScreen = () => {
                       <Code className="w-4 h-4" />
                         GitHub
                   </a>
-                  <Link
-                    to={project.caseStudyPath}
-                    className="col-span-2 md:col-span-1 px-4 py-3 rounded-full border border-outline-variant/30 text-center text-xs font-bold uppercase tracking-widest text-on-surface-variant flex items-center justify-center gap-2 hover:bg-surface-container-high transition-all"
-                  >
-                    Case Study
-                  </Link>
+                  {project.caseStudy && (
+                    <Link
+                      to={`/projects/${project.slug}`}
+                      className="px-4 py-3 rounded-full border border-outline-variant/30 text-center text-xs font-bold uppercase tracking-widest text-on-surface-variant flex items-center justify-center gap-2 hover:bg-surface-container-high transition-all"
+                    >
+                      Case Study
+                    </Link>
+                  )}
                 </div>
               </div>
             </div>
           </motion.div>
-        ))}
+          );
+        })}
       </div>
 
       <section className="mt-32 p-12 glass-panel rounded-xl border border-outline-variant/10 text-center relative overflow-hidden">

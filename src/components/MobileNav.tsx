@@ -1,8 +1,9 @@
 import { Link, useLocation } from 'react-router-dom';
-import { Home as HomeIcon, History, Box, Brain } from 'lucide-react';
+import { Home as HomeIcon, History, Box, Brain, Briefcase } from 'lucide-react';
 
 const MOBILE_NAV_LINKS = [
   { path: '/', label: 'home', icon: HomeIcon },
+  { path: '/consulting', label: 'consult', icon: Briefcase },
   { path: '/experience', label: 'Exp', icon: History },
   { path: '/projects', label: 'projects', icon: Box },
   { path: '/assistant', label: 'AI', icon: Brain },

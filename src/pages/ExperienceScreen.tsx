@@ -1,14 +1,5 @@
 import { Terminal, Rocket, Box, Database, Cloud, Brain } from 'lucide-react';
-
-const experiences = [
-  {
-    role: "Software Engineer",
-    company: "Cyber Managers Software Services Pvt. Ltd.",
-    period: "JULY'23 — NOV'25",
-    description: "Architected and scaled a mission-critical attendance system serving 200k+ active users. Optimized backend latency by 40% and implemented robust real-time synchronization protocols.",
-    tags: ["High Concurrency", "Distributed Systems", "System Design"]
-  }
-];
+import { experiences } from '../data/experience';
 
 const techStack = [
   { name: "Python", icon: <Terminal className="w-8 h-8" /> },

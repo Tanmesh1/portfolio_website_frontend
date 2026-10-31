@@ -3,8 +3,6 @@ import { motion } from 'motion/react';
 import {
   ArrowLeft,
   ArrowRight,
-  ExternalLink,
-  Github,
   Webhook,
   Brain,
   Database,
@@ -17,79 +15,76 @@ import {
 const workflowSteps = [
   {
     id: '01',
-    title: 'Document Intake',
-    desc: 'Requirement documents, client notes, and raw technical descriptions are uploaded into the analysis pipeline.',
+    title: 'Intake',
+    desc: 'Incoming requests (messages, tickets, orders) are captured as they arrive, with no manual sorting step.',
     icon: <Webhook className="text-secondary w-6 h-6" />
   },
   {
     id: '02',
-    title: 'LLM Requirement Parsing',
-    desc: 'The system breaks down vague or unstructured input into actors, modules, constraints, dependencies, and system expectations.',
+    title: 'Intent Understanding',
+    desc: 'An LLM parses the request into structured intent — what the user wants, and what data is needed to act on it.',
     icon: <Brain className="text-secondary w-6 h-6" />
   },
   {
     id: '03',
-    title: 'Knowledge Retrieval',
-    desc: 'Relevant context is pulled from indexed reference material and domain memory to improve precision and reduce ambiguity.',
+    title: 'Live Data Check',
+    desc: 'The agent queries live systems (inventory, CRM, internal APIs) rather than acting on stale or assumed state.',
     icon: <Database className="text-secondary w-6 h-6" />
   },
   {
     id: '04',
-    title: 'Structured Output Generation',
-    desc: 'ReqScan generates refined BRDs, architecture-aligned insights, and implementation-ready summaries for product teams.',
+    title: 'Action + Response',
+    desc: 'The workflow executes the action and replies in natural language, escalating to a human only for genuine exceptions.',
     icon: <Bot className="text-secondary w-6 h-6" />
   }
 ];
 
 const techs = [
-  { name: 'React.js', role: 'Frontend Layer' },
-  { name: 'Python', role: 'Typed Logic' },
-  { name: 'OpenAI', role: 'Reasoning Engine' },
-  { name: 'Pinecone', role: 'Vector Retrieval' },
+  { name: 'Python', role: 'Core Logic' },
   { name: 'FastAPI', role: 'Orchestration' },
-  { name: 'RAG', role: 'Context Precision' }
+  { name: 'OpenAI', role: 'Reasoning Engine' },
+  { name: 'MongoDB', role: 'State & Memory' },
 ];
 
 const features = [
   {
-    title: 'Requirement Intelligence',
-    desc: 'Turns scattered project notes and client language into structured requirement artifacts teams can actually build from.'
+    title: 'End-to-End Handling',
+    desc: 'The workflow owns the full loop — intent to action to response — instead of just flagging work for a human.'
   },
   {
-    title: 'Context-Aware Analysis',
-    desc: 'Uses retrieval to ground outputs in supporting material rather than relying on generic model assumptions.'
+    title: 'Exception-Only Escalation',
+    desc: 'Humans step in only when the agent is genuinely uncertain, not for every routine request.'
   },
   {
-    title: 'Architecture-Ready Outputs',
-    desc: 'Surfaces modules, workflows, risks, and system-level concerns early so product and engineering stay aligned.'
+    title: 'Grounded in Live State',
+    desc: 'Decisions are checked against real, current data rather than cached snapshots or assumptions.'
   }
 ];
 
 const hurdles = [
-  'Handling incomplete, contradictory, or business-heavy requirement language.',
-  'Reducing hallucinations when the source document lacks technical precision.',
-  'Producing outputs that are useful for both stakeholders and engineering teams.'
+  'Keeping the agent from acting confidently on incomplete or ambiguous requests.',
+  'Integrating cleanly with existing internal systems without a rip-and-replace.',
+  'Making escalation-to-human feel seamless rather than like a dead end.'
 ];
 
 const roadmap = [
-  'Automatic user story and acceptance criteria generation',
-  'Visual architecture diagram suggestions from parsed requirements',
-  'Multi-document comparison for change tracking and scope drift',
-  'Domain-specific analysis templates for SaaS, ERP, and AI products'
+  'Multi-channel intake beyond the initial integration',
+  'Confidence-scored auto-escalation thresholds',
+  'Self-service dashboards for ops teams to review agent decisions',
 ];
 
-export const ReqscanAiAnalyzerCaseStudy = () => {
+export const ManualOpsAutomationCaseStudy = () => {
   const navigate = useNavigate();
 
   return (
     <div className="pt-28 pb-24">
       <section className="px-6 md:px-10 max-w-7xl mx-auto mb-12">
         <button
-          onClick={() => navigate('/projects')}
+          onClick={() => navigate('/consulting')}
           className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-secondary hover:text-on-surface transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
-          Back to Projects
+          Back to Consulting
         </button>
       </section>
 
@@ -102,26 +97,14 @@ export const ReqscanAiAnalyzerCaseStudy = () => {
           transition={{ duration: 0.8 }}
           className="max-w-5xl z-10"
         >
-          <span className="text-secondary font-label tracking-[0.2em] uppercase text-xs mb-6 block">Product Intelligence Division // Case Study</span>
+          <span className="text-secondary font-label tracking-[0.2em] uppercase text-xs mb-6 block">Enterprise AI Consulting // Case Study</span>
           <h1 className="text-5xl md:text-7xl font-headline font-bold tracking-tighter leading-[1.1] mb-8">
-            ReqScan AI Analyzer: From Raw Requirements to <span className="text-gradient-cyan-purple">Build-Ready Clarity</span>
+            Turning Manual Ops Into <span className="text-gradient-cyan-purple">Agentic Workflows</span>
           </h1>
           <p className="text-xl md:text-2xl text-on-surface-variant font-light leading-relaxed max-w-3xl">
-            An AI-assisted requirement analysis system that transforms ambiguous documents into structured BRDs, architectural signals, and implementation-focused insights.
+            How to take a team off repetitive, judgment-light request handling by giving an AI agent
+            the full loop: understand, check live data, act, and respond.
           </p>
-          <div className="mt-12 flex flex-wrap gap-4">
-            <button className="cta-gradient text-surface px-8 py-4 rounded-full font-bold text-lg hover:scale-[1.02] active:scale-95 transition-all cursor-pointer flex items-center gap-2">
-              View Live Demo <ExternalLink className="w-5 h-5" />
-            </button>
-            <a
-              href="https://github.com/Tanmesh1?tab=repositories"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="glass-panel border border-secondary/20 text-secondary px-8 py-4 rounded-full font-bold text-lg hover:bg-secondary/10 transition-all cursor-pointer flex items-center gap-2"
-            >
-              GitHub Repository <Github className="w-5 h-5" />
-            </a>
-          </div>
         </motion.div>
       </section>
 
@@ -137,10 +120,9 @@ export const ReqscanAiAnalyzerCaseStudy = () => {
               <AlertTriangle className="text-error mb-6 w-10 h-10" />
               <h2 className="text-3xl font-headline font-bold mb-6 tracking-tight">The Bottleneck</h2>
               <ul className="space-y-4 text-on-surface-variant leading-relaxed">
-                <li className="flex items-start gap-3"><span className="text-error font-bold">•</span> Requirement docs often arrive vague, inconsistent, and overloaded with business language.</li>
-                <li className="flex items-start gap-3"><span className="text-error font-bold">•</span> Product and engineering teams lose time converting raw notes into structured deliverables.</li>
-                <li className="flex items-start gap-3"><span className="text-error font-bold">•</span> Missing edge cases and unclear dependencies create downstream architectural mistakes.</li>
-                <li className="flex items-start gap-3"><span className="text-error font-bold">•</span> Traditional documentation workflows are slow, manual, and hard to scale across projects.</li>
+                <li className="flex items-start gap-3"><span className="text-error font-bold">•</span> Support/ops load scales linearly with request volume, not with efficiency gains.</li>
+                <li className="flex items-start gap-3"><span className="text-error font-bold">•</span> Most incoming requests follow the same shape, but still route through a human every time.</li>
+                <li className="flex items-start gap-3"><span className="text-error font-bold">•</span> Existing automation (rules, scripts) breaks the moment a request doesn't match a fixed pattern.</li>
               </ul>
             </div>
           </motion.div>
@@ -153,12 +135,13 @@ export const ReqscanAiAnalyzerCaseStudy = () => {
           >
             <div className="absolute inset-0 bg-linear-to-br from-secondary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
             <Sparkles className="text-secondary mb-6 w-10 h-10" />
-            <h2 className="text-3xl font-headline font-bold mb-6 tracking-tight">The Analysis Architecture</h2>
+            <h2 className="text-3xl font-headline font-bold mb-6 tracking-tight">The Agentic Approach</h2>
             <p className="text-lg text-on-surface leading-relaxed mb-8">
-              ReqScan combines LLM reasoning with retrieval-backed context to extract requirements, identify missing logic, and produce structured outputs that accelerate planning, validation, and system design.
+              Replace fixed rules with an LLM-driven agent that reasons about each request, checks live
+              system state before acting, and only escalates what it's genuinely unsure about.
             </p>
             <div className="flex flex-wrap gap-3">
-              {['RAG-Powered', 'Structured Output', 'Engineering-Aligned'].map((tag) => (
+              {['Agentic', 'Live Data Grounded', 'Exception-Only Escalation'].map((tag) => (
                 <span key={tag} className="bg-surface-container-highest px-4 py-2 rounded-lg text-xs font-label uppercase tracking-widest text-secondary">
                   {tag}
                 </span>
@@ -196,7 +179,7 @@ export const ReqscanAiAnalyzerCaseStudy = () => {
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-4">
             <h2 className="text-4xl font-headline font-bold">Technological Core</h2>
-            <p className="text-secondary font-label text-sm uppercase tracking-widest">Built for analysis precision and scalable workflows</p>
+            <p className="text-secondary font-label text-sm uppercase tracking-widest">Built for reliability under real-world load</p>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
             {techs.map((tech) => (
@@ -213,45 +196,18 @@ export const ReqscanAiAnalyzerCaseStudy = () => {
         </div>
       </section>
 
-      <section className="px-6 md:px-10 max-w-7xl mx-auto mb-24 grid grid-cols-1 md:grid-cols-2 gap-24 items-center">
-        <motion.div
-          whileInView={{ opacity: 1, x: 0 }}
-          initial={{ opacity: 0, x: -20 }}
-          viewport={{ once: true }}
-        >
-          <h2 className="text-5xl font-headline font-bold mb-12 leading-tight">Engineered for<br /><span className="text-tertiary">Requirement Precision</span></h2>
-          <div className="space-y-8">
-            {features.map((feature) => (
-              <div key={feature.title} className="flex gap-6">
-                <CheckCircle2 className="text-secondary w-6 h-6 shrink-0 mt-1" />
-                <div>
-                  <h4 className="text-xl font-bold mb-2">{feature.title}</h4>
-                  <p className="text-on-surface-variant">{feature.desc}</p>
-                </div>
+      <section className="px-6 md:px-10 max-w-7xl mx-auto mb-24">
+        <h2 className="text-5xl font-headline font-bold mb-12 leading-tight text-center">Engineered for <span className="text-tertiary">Reliable Autonomy</span></h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+          {features.map((feature) => (
+            <div key={feature.title} className="flex gap-4">
+              <CheckCircle2 className="text-secondary w-6 h-6 shrink-0 mt-1" />
+              <div>
+                <h4 className="text-xl font-bold mb-2">{feature.title}</h4>
+                <p className="text-on-surface-variant">{feature.desc}</p>
               </div>
-            ))}
-          </div>
-        </motion.div>
-
-        <div className="relative">
-          <motion.div
-            whileInView={{ opacity: 1, scale: 1 }}
-            initial={{ opacity: 0, scale: 0.9 }}
-            viewport={{ once: true }}
-            className="aspect-square bg-surface-container-high rounded-xl overflow-hidden glass-panel border border-outline-variant/10 p-8 flex items-center justify-center relative"
-          >
-            <div className="absolute inset-0 bg-linear-to-tr from-secondary/10 to-tertiary/10"></div>
-            <img
-              className="rounded-lg shadow-2xl relative z-10 w-4/5 transform rotate-2"
-              alt="Requirement analysis dashboard"
-              src="https://picsum.photos/seed/reqscan-dashboard/900/900"
-              referrerPolicy="no-referrer"
-            />
-          </motion.div>
-          <div className="absolute -bottom-8 -left-8 bg-primary-container p-6 rounded-xl border border-secondary/20 z-20 hidden md:block">
-            <p className="text-4xl font-bold text-secondary font-headline">91%</p>
-            <p className="text-xs uppercase tracking-widest font-label text-on-surface-variant">Structured Output Confidence</p>
-          </div>
+            </div>
+          ))}
         </div>
       </section>
 
@@ -299,8 +255,8 @@ export const ReqscanAiAnalyzerCaseStudy = () => {
         >
           <div className="absolute -top-24 -left-24 w-64 h-64 bg-secondary/5 blur-[80px] rounded-full"></div>
           <div className="relative z-10 max-w-2xl mx-auto">
-            <h2 className="text-4xl md:text-5xl font-headline font-bold mb-8">Turn complexity into clarity.</h2>
-            <p className="text-xl text-on-surface-variant mb-12">Available for AI product design, requirement intelligence, and developer workflow automation projects.</p>
+            <h2 className="text-4xl md:text-5xl font-headline font-bold mb-8">Get your ops team off the treadmill.</h2>
+            <p className="text-xl text-on-surface-variant mb-12">Available for agentic workflow design and automation consulting engagements.</p>
             <button
               onClick={() => navigate('/assistant')}
               className="bg-on-surface text-surface px-12 py-5 rounded-full text-xl font-bold hover:bg-secondary transition-all cursor-pointer flex items-center gap-3 mx-auto"

@@ -1,0 +1,178 @@
+[
+  {
+    "slug": "agentic-sales-driver",
+    "title": "Agentic Sales Driver",
+    "description": "Full-stack WhatsApp commerce system that understands buying intent, checks inventory in real time, and replies like a human sales assistant. Built as an agentic workflow for faster conversions and lower support load.",
+    "tech": ["Python", "OpenAI", "FastAPI", "MongoDB"],
+    "status": "Production",
+    "icon": "MessageSquare",
+    "image": "/agentic_sales_photo.webp",
+    "caseStudy": {
+      "eyebrow": "Agentic Systems Division",
+      "headline": "Agentic Sales Driver: Autonomous AI for WhatsApp-Based Retail Selling",
+      "headlineHighlight": "WhatsApp-Based",
+      "summary": "An AI-powered system that turns customer messages into sales by understanding intent, checking inventory, and responding like a human sales assistant.",
+      "problems": [
+        "Manual and delayed replies lead to lead drop-off before purchase intent can convert.",
+        "Chat-based selling often lacks structured attribution and intent visibility.",
+        "Growth usually means hiring more support staff instead of improving the system.",
+        "Most stores have data, but no intelligence layer between inventory and the customer."
+      ],
+      "architectureTitle": "The Agentic Architecture",
+      "architecture": "I built an agentic sales system that parses customer messages, extracts structured buying intent, matches live inventory, and responds contextually through an automated backend workflow.",
+      "architectureTags": ["Autonomous", "Context-Aware", "Inventory-Synced"],
+      "workflow": [
+        {
+          "title": "Webhook/API Intake",
+          "desc": "Real-time customer messages are captured from the WhatsApp layer and routed into the FastAPI backend for processing.",
+          "icon": "Webhook"
+        },
+        {
+          "title": "LLM Intent Parsing",
+          "desc": "Unstructured chats are transformed into structured intent data like product, quantity, variation, and buying signals.",
+          "icon": "Brain"
+        },
+        {
+          "title": "Inventory Check",
+          "desc": "The system verifies real-time availability and pricing before the assistant makes any commitment to the customer.",
+          "icon": "Package"
+        },
+        {
+          "title": "AI Response Generation",
+          "desc": "A context-aware response is created in brand voice and sent back as a guided sales reply.",
+          "icon": "Bot"
+        }
+      ],
+      "techTagline": "Built for production-grade reliability",
+      "techs": [
+        { "name": "FastAPI", "role": "Backend API" },
+        { "name": "MongoDB", "role": "Inventory State" },
+        { "name": "OpenAI", "role": "Reasoning Layer" },
+        { "name": "Streamlit", "role": "Control Panel" },
+        { "name": "AWS", "role": "Deployment" },
+        { "name": "Meta API", "role": "WhatsApp Channel" }
+      ],
+      "featuresHighlight": "Precision Selling",
+      "features": [
+        {
+          "title": "Autonomous Chat Handling",
+          "desc": "Handles end-to-end sales conversations without human intervention unless escalation is needed."
+        },
+        {
+          "title": "Natural Language Product Extraction",
+          "desc": "Understands messy customer messages, vague product references, and shorthand buying requests."
+        },
+        {
+          "title": "Real-time Inventory Awareness",
+          "desc": "Prevents bad promises by grounding every answer in live product availability and pricing."
+        }
+      ],
+      "showcaseImage": {
+        "src": "https://lh3.googleusercontent.com/aida-public/AB6AXuB0DpQ_-3gM8Jhri9t4En0Vo_PaQgjtw7ULtPYKWs8bwCQwCMoWvWRKgwaDVQ-olC3Eq5jw2BbDM1fB5khdy7CHQo_EuKbU8AGub29F5ctVHsjNPRxlraaJRcX-l8BXkFx3X83ttAA_vedHKBT72EvINnOgm2arSXWkdVxuZ_wccl5FRcck4VV2rqbGqAvJnaT5rhcBJPlp4CQPdbRZUchhi_eBS10hu1qG7WOKTOEKkKW4VegXcR-vlLwJN-bIFwW5GCb6zGanvEmy",
+        "alt": "Modern smartphone interface"
+      },
+      "metric": { "value": "94%", "label": "Intent Match Accuracy" },
+      "hurdles": [
+        "Managing highly ambiguous slang and unstructured retail chat patterns.",
+        "Maintaining conversation context across multiple sessions and follow-ups.",
+        "Guarding the model against inventory hallucinations and unsupported promises."
+      ],
+      "roadmap": [
+        "Direct payment link generation inside the chat flow",
+        "Personalized recommendations from conversation history",
+        "Multi-language support for regional dialects",
+        "Lower-cost specialized models for high-volume inference"
+      ],
+      "ctaTitle": "Let's build the unseen future.",
+      "ctaText": "Currently accepting select projects for agentic system design and AI infrastructure."
+    }
+  },
+  {
+    "slug": "reqscan-ai-analyzer",
+    "title": "ReqScan AI Analyzer",
+    "description": "Advanced Requirement Analyzer that transforms unstructured technical specifications into validated BRDs and system architecture maps. Utilizes RAG (Retrieval-Augmented Generation) for precision accuracy.",
+    "tech": ["OpenAI", "Pinecone", "Python", "FastAPI", "React"],
+    "status": "Active R&D",
+    "icon": "FileText",
+    "image": "/Reqscan_image.webp",
+    "caseStudy": {
+      "eyebrow": "Product Intelligence Division",
+      "headline": "ReqScan AI Analyzer: From Raw Requirements to Build-Ready Clarity",
+      "headlineHighlight": "Build-Ready Clarity",
+      "summary": "An AI-assisted requirement analysis system that transforms ambiguous documents into structured BRDs, architectural signals, and implementation-focused insights.",
+      "problems": [
+        "Requirement docs often arrive vague, inconsistent, and overloaded with business language.",
+        "Product and engineering teams lose time converting raw notes into structured deliverables.",
+        "Missing edge cases and unclear dependencies create downstream architectural mistakes.",
+        "Traditional documentation workflows are slow, manual, and hard to scale across projects."
+      ],
+      "architectureTitle": "The Analysis Architecture",
+      "architecture": "ReqScan combines LLM reasoning with retrieval-backed context to extract requirements, identify missing logic, and produce structured outputs that accelerate planning, validation, and system design.",
+      "architectureTags": ["RAG-Powered", "Structured Output", "Engineering-Aligned"],
+      "workflow": [
+        {
+          "title": "Document Intake",
+          "desc": "Requirement documents, client notes, and raw technical descriptions are uploaded into the analysis pipeline.",
+          "icon": "Webhook"
+        },
+        {
+          "title": "LLM Requirement Parsing",
+          "desc": "The system breaks down vague or unstructured input into actors, modules, constraints, dependencies, and system expectations.",
+          "icon": "Brain"
+        },
+        {
+          "title": "Knowledge Retrieval",
+          "desc": "Relevant context is pulled from indexed reference material and domain memory to improve precision and reduce ambiguity.",
+          "icon": "Database"
+        },
+        {
+          "title": "Structured Output Generation",
+          "desc": "ReqScan generates refined BRDs, architecture-aligned insights, and implementation-ready summaries for product teams.",
+          "icon": "Bot"
+        }
+      ],
+      "techTagline": "Built for analysis precision and scalable workflows",
+      "techs": [
+        { "name": "React.js", "role": "Frontend Layer" },
+        { "name": "Python", "role": "Typed Logic" },
+        { "name": "OpenAI", "role": "Reasoning Engine" },
+        { "name": "Pinecone", "role": "Vector Retrieval" },
+        { "name": "FastAPI", "role": "Orchestration" },
+        { "name": "RAG", "role": "Context Precision" }
+      ],
+      "featuresHighlight": "Requirement Precision",
+      "features": [
+        {
+          "title": "Requirement Intelligence",
+          "desc": "Turns scattered project notes and client language into structured requirement artifacts teams can actually build from."
+        },
+        {
+          "title": "Context-Aware Analysis",
+          "desc": "Uses retrieval to ground outputs in supporting material rather than relying on generic model assumptions."
+        },
+        {
+          "title": "Architecture-Ready Outputs",
+          "desc": "Surfaces modules, workflows, risks, and system-level concerns early so product and engineering stay aligned."
+        }
+      ],
+      "showcaseImage": {
+        "src": "https://picsum.photos/seed/reqscan-dashboard/900/900",
+        "alt": "Requirement analysis dashboard"
+      },
+      "metric": { "value": "91%", "label": "Structured Output Confidence" },
+      "hurdles": [
+        "Handling incomplete, contradictory, or business-heavy requirement language.",
+        "Reducing hallucinations when the source document lacks technical precision.",
+        "Producing outputs that are useful for both stakeholders and engineering teams."
+      ],
+      "roadmap": [
+        "Automatic user story and acceptance criteria generation",
+        "Visual architecture diagram suggestions from parsed requirements",
+        "Multi-document comparison for change tracking and scope drift",
+        "Domain-specific analysis templates for SaaS, ERP, and AI products"
+      ],
+      "ctaTitle": "Turn complexity into clarity.",
+      "ctaText": "Available for AI product design, requirement intelligence, and developer workflow automation projects."
+    }
+  }
+]

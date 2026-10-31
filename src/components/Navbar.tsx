@@ -3,6 +3,7 @@ import { Terminal, Moon } from 'lucide-react';
 
 const NAV_LINKS = [
   { path: '/', label: 'home' },
+  { path: '/consulting', label: 'consulting' },
   { path: '/projects', label: 'projects' },
   { path: '/experience', label: 'experience' },
   { path: '/assistant', label: 'AI Assistant' },
