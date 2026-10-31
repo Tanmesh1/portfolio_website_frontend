@@ -60,16 +60,17 @@ export const HomeScreen = () => {
             className="md:col-span-5 flex justify-center"
           >
             <div className="relative group">
-              <div className="absolute -inset-1 bg-gradient-to-tr from-secondary/40 to-tertiary/40 rounded-lg blur-md opacity-75"></div>
-              <div className="relative p-1.5 rounded-lg bg-white/10 backdrop-blur-md border border-white/20">
+              {/* Explicit radii: the theme's rounded-lg is 2rem. Inner radius = outer − padding. */}
+              <div className="absolute -inset-1 bg-gradient-to-tr from-secondary/40 to-tertiary/40 rounded-[20px] blur-md opacity-75"></div>
+              <div className="relative p-1.5 rounded-[18px] bg-white/10 backdrop-blur-md border border-white/20">
                 <img
                   src="/profile.jpeg"
                   alt="Tanmesh Joshi"
-                  className="rounded-md w-full max-w-[340px] aspect-[3/4] object-cover grayscale hover:grayscale-0 transition-all duration-700 shadow-2xl"
+                  className="rounded-[12px] w-full max-w-[340px] aspect-[3/4] object-cover object-top shadow-2xl"
                   referrerPolicy="no-referrer"
                 />
-                <div className="absolute -bottom-17 -right-6 hidden md:block glass-panel border border-outline-variant/30 rounded-lg p-4 animate-bounce hover:animate-none">
-                  <div className="flex items-center gap-2 mb-2">
+                <div className="absolute bottom-5 left-5 bg-surface/80 backdrop-blur-md border border-secondary/30 rounded-[10px] px-3 py-2">
+                  <div className="flex items-center gap-2 mb-1">
                     <div className="w-2 h-2 rounded-full bg-secondary"></div>
                     <span className="text-[10px] font-mono text-secondary uppercase tracking-tighter">Status: Active</span>
                   </div>
